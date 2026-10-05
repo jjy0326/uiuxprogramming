@@ -12,6 +12,14 @@ body {
     background-color: #f3f0d0;
 }
 
+header,
+main,
+footer {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
 h1 {
     margin: 0 0 25px 0;
     padding: 15px 25px;
@@ -56,9 +64,37 @@ p {
     color: #5b5742;
 }
 
-.features-list {
+nav {
     display: flex;
-    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 15px auto;
+}
+
+nav a {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #d5cf91;
+    border-radius: 6px;
+    background-color: #e9e6a8;
+    color: #5b5742;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background-color: #ded58b;
+    color: #403d2d;
+    transform: translateY(-2px);
+}
+
+.features-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: stretch;
     gap: 12px;
     list-style: none;
     padding: 0;
@@ -66,7 +102,7 @@ p {
 }
 
 .features-card {
-    flex: 0 0 calc((100% - 36px) / 4);
+    min-width: 0;
     padding: 6px 8px;
     margin: 0;
     border: 1px solid #d5cf91;
@@ -163,4 +199,68 @@ footer {
     background-color: #eeecb0;
     color: #5b5742;
     text-align: center;
+}
+
+@media (max-width: 768px) {
+
+    body {
+        font-size: 16px;
+    }
+
+    header {
+        padding-top: 32px;
+        padding-bottom: 24px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    nav a {
+        flex: none;
+        width: 100%;
+    }
+
+    .features-list {
+        grid-template-columns: 1fr;
+    }
+
+    form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    form input,
+    form button {
+        width: 100%;
+    }
+
+    form button {
+        min-height: 48px;
+    }
+
+    .flow-list {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .flow-list li {
+        width: 100%;
+    }
+
+    .flow-list li:not(:last-child)::after {
+        content: "↓";
+        right: 50%;
+        bottom: -25px;
+        top: auto;
+    }
 }
