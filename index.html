@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
+    
 
 <head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UX/UI 수업 간단 정리</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX/UI 2주차 수업 내용과 정리</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+ 
 </head>
 
 <body>
@@ -21,7 +23,7 @@
         <!-- 핵심 행동: 내용을 확인하고 노트를 저장 -->
         <!-- 정보 순서: 수업틀 → 주요 내용 확인 → 핵심 내용 확인 → 노트저장 -->
 
-        <h1>UX/UI 2주차 수업 내용과 정리</h1>
+        <h1 id="mainTitle">UX/UI 2주차 수업 내용과 정리</h1>
         <p>HTML은 화면의 모양보다 먼저 정보와 행동의 구조를 만듭니다.</p>
     </header>
 
@@ -98,16 +100,16 @@
                 입력과 제출 및 검증에 활용합니다.
             </p>
 
-            <form aria-label="노트 저장 양식">
-
+            <form id="noteForm" aria-label="노트 저장 양식">
                 <label for="title">제목:</label>
                 <input type="text" id="title" placeholder="제목을 입력하세요">
-
-                <button type="submit" aria-label="노트 저장">저장하기</button>
-
+                <button type="submit" id="saveButton">저장하기</button>
+                <button type="button" id="resetButton">다시 작성</button>
             </form>
 
-            </form>
+            <p id="saveMessage">노트 제목을 입력하고 저장해 주세요.</p>
+
+         
 
         </section>
 
@@ -116,6 +118,7 @@
     <footer>
         <p>2026-09-20 수업 정리 내용</p>
     </footer>
+       <script src="script.js"></script>
 
 </body>
 

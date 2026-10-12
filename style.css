@@ -263,4 +263,20 @@ footer {
         bottom: -25px;
         top: auto;
     }
+
+}
+#saveMessage.is-saved {
+    background-color: #e9edcf;
+    color: #40543b;
+    font-weight: 700;
+}
+
+#saveMessage.is-error {
+    background-color: #f4e5bd;
+    color: #76502c;
+}
+
+#saveButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
