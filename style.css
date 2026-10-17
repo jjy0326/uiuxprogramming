@@ -1,5 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+
 * {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -20,8 +26,16 @@ footer {
     margin: 0 auto;
 }
 
+h1,
+h2,
+h3,
+h4,
+p {
+    overflow-wrap: anywhere;
+}
+
 h1 {
-    margin: 0 0 25px 0;
+    margin: 0 0 25px;
     padding: 15px 25px;
     border: 1px solid #d5cf91;
     border-radius: 6px;
@@ -56,6 +70,10 @@ h3 {
     font-size: 20px;
 }
 
+h4 {
+    color: #403d2d;
+}
+
 p {
     margin: 10px 0;
     padding: 10px 15px;
@@ -64,8 +82,21 @@ p {
     color: #5b5742;
 }
 
+.header-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.header-intro {
+    flex: 1;
+    min-width: 0;
+}
+
 nav {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     width: 100%;
     max-width: 1100px;
@@ -85,12 +116,14 @@ nav a {
     transition: 0.3s;
 }
 
-nav a:hover {
+nav a:hover,
+nav a:focus-visible {
     background-color: #ded58b;
     color: #403d2d;
     transform: translateY(-2px);
 }
 
+.feature-grid,
 .features-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -98,25 +131,27 @@ nav a:hover {
     gap: 12px;
     list-style: none;
     padding: 0;
-    margin: 15px 0 25px 0;
+    margin: 15px 0 25px;
 }
 
+.feature-card,
 .features-card {
     min-width: 0;
-    padding: 6px 8px;
+    padding: 12px;
     margin: 0;
     border: 1px solid #d5cf91;
     border-radius: 6px;
     background-color: #e9e6a8;
     color: #5b5742;
-    font-size: 13px;
+    font-size: 15px;
     transition: 0.3s;
 }
 
+.feature-card:hover,
 .features-card:hover {
     background-color: #ded58b;
     color: #403d2d;
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
 .flow-list {
@@ -155,17 +190,84 @@ ol li {
     padding: 3px 0;
 }
 
-form {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px;
+/* 학습 체크리스트 */
+#studyChecklist {
+    flex: 0 0 260px;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #d5cf91;
+    border-radius: 8px;
     background-color: #eeecb0;
 }
 
-form input {
-    width: 300px;
-    height: 40px;
+#studyChecklist h2 {
+    margin-top: 0;
+    font-size: 19px;
+}
+
+.study-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.study-item input {
+    flex: 0 0 auto;
+    width: auto;
+    margin-top: 6px;
+}
+
+#studyProgress {
+    font-weight: 700;
+}
+
+#studyCompleteMessage,
+#memoMessage,
+#saveMessage {
+    min-height: 1.6em;
+    overflow-wrap: anywhere;
+}
+
+/* 테마 버튼 */
+.theme-button {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+}
+
+/* 간단 메모 위젯 */
+#memoWidget {
+    position: fixed;
+    top: 80px;
+    right: 16px;
+    z-index: 900;
+    width: 210px;
+    padding: 14px;
+    border: 1px solid #d5cf91;
+    border-radius: 8px;
+    background-color: #eeecb0;
+    color: #4a4735;
+    box-shadow: 0 4px 12px rgb(74 71 53 / 12%);
+}
+
+#memoWidget label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+#memoWidget p {
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+/* 입력 영역 */
+input,
+textarea {
+    width: 100%;
+    min-width: 0;
     padding: 8px 12px;
     border: 1px solid #cfc78a;
     border-radius: 5px;
@@ -175,8 +277,24 @@ form input {
     font-size: 15px;
 }
 
-form button {
-    height: 40px;
+textarea {
+    resize: vertical;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #8b8040;
+    outline-offset: 2px;
+}
+
+input[type="checkbox"] {
+    accent-color: #82783d;
+}
+
+button {
+    min-height: 40px;
     padding: 8px 18px;
     border: 1px solid #b9ad63;
     border-radius: 5px;
@@ -188,22 +306,228 @@ form button {
     transition: 0.3s;
 }
 
-form button:hover {
+button:hover:not(:disabled) {
     background-color: #d3c879;
     transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#studyCompleteButton {
+    width: 100%;
+}
+
+/* 노트 저장 폼 */
+#noteForm {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #d5cf91;
+    border-radius: 6px;
+    background-color: #eeecb0;
+}
+
+#noteForm label {
+    font-weight: 500;
+}
+
+#noteForm input,
+#noteForm textarea {
+    width: 100%;
+}
+
+.form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+#saveMessage.is-saved {
+    background-color: #e9edcf;
+    color: #40543b;
+    font-weight: 700;
+}
+
+#saveMessage.is-error {
+    background-color: #f4e5bd;
+    color: #76502c;
+    font-weight: 700;
+}
+
+#saveButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 저장된 노트 */
+.note-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+}
+
+.note-item {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #d5cf91;
+    border-radius: 6px;
+    background-color: #e9e6a8;
+    color: #5b5742;
+}
+
+.note-item h4 {
+    margin: 0 0 8px;
+    color: #403d2d;
+}
+
+.note-item p {
+    white-space: pre-wrap;
+}
+
+.note-item small {
+    display: block;
+    margin-top: 8px;
+    opacity: 0.8;
+}
+
+.note-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* 탭 메뉴 */
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.tab {
+    background-color: #e9e6a8;
+}
+
+.tab.is-active {
+    border-bottom: 4px solid #82783d;
+    background-color: #ded58b;
+    font-weight: 700;
+}
+
+.panel {
+    padding: 20px;
+    border: 1px solid #d5cf91;
+    border-radius: 8px;
+    background-color: #f6f4bd;
+    color: #4a4735;
+}
+
+.panel[hidden] {
+    display: none;
 }
 
 footer {
     margin-top: 30px;
     padding: 10px;
+    border: 1px solid #d5cf91;
+    border-radius: 6px;
     background-color: #eeecb0;
     color: #5b5742;
     text-align: center;
 }
 
-@media (max-width: 768px) {
+footer p {
+    margin: 0;
+}
 
+/* 다크 테마 */
+body.dark {
+    background-color: #20212a;
+    color: #f4f4f8;
+}
+
+body.dark h1,
+body.dark footer,
+body.dark #studyChecklist,
+body.dark #memoWidget,
+body.dark #noteForm {
+    border-color: #50515f;
+    background-color: #2d2e38;
+    color: #f4f4f8;
+}
+
+body.dark h2,
+body.dark p,
+body.dark .panel {
+    border-color: #50515f;
+    background-color: #2d2e38;
+    color: #f4f4f8;
+}
+
+body.dark h3,
+body.dark h4 {
+    color: #f4f4f8;
+}
+
+body.dark nav a,
+body.dark .feature-card,
+body.dark .features-card,
+body.dark .note-item,
+body.dark .flow-list li {
+    border-color: #50515f;
+    background-color: #363744;
+    color: #f4f4f8;
+}
+
+body.dark nav a:hover,
+body.dark .feature-card:hover,
+body.dark .features-card:hover {
+    background-color: #48495a;
+}
+
+body.dark button,
+body.dark .tab {
+    border-color: #50515f;
+    background-color: #363744;
+    color: #f4f4f8;
+}
+
+body.dark button:hover:not(:disabled),
+body.dark .tab.is-active {
+    background-color: #48495a;
+}
+
+body.dark input,
+body.dark textarea {
+    border-color: #50515f;
+    background-color: #20212a;
+    color: #f4f4f8;
+}
+
+body.dark #saveMessage.is-saved {
+    background-color: #293b2c;
+    color: #a9e5a5;
+}
+
+body.dark #saveMessage.is-error {
+    background-color: #44332d;
+    color: #ffb4a6;
+}
+
+/* 태블릿 및 모바일 */
+@media (max-width: 768px) {
     body {
+        padding: 20px;
         font-size: 16px;
     }
 
@@ -212,12 +536,19 @@ footer {
         padding-bottom: 24px;
     }
 
-    h1 {
-        font-size: 30px;
+    .header-layout {
+        flex-direction: column;
     }
 
-    h2 {
-        font-size: 24px;
+    #studyChecklist {
+        width: 100%;
+        flex-basis: auto;
+    }
+
+    .feature-grid,
+    .features-list,
+    .note-list {
+        grid-template-columns: 1fr;
     }
 
     nav {
@@ -228,24 +559,6 @@ footer {
     nav a {
         flex: none;
         width: 100%;
-    }
-
-    .features-list {
-        grid-template-columns: 1fr;
-    }
-
-    form {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    form input,
-    form button {
-        width: 100%;
-    }
-
-    form button {
-        min-height: 48px;
     }
 
     .flow-list {
@@ -264,19 +577,67 @@ footer {
         top: auto;
     }
 
-}
-#saveMessage.is-saved {
-    background-color: #e9edcf;
-    color: #40543b;
-    font-weight: 700;
+    .tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tab {
+        width: 100%;
+        text-align: left;
+    }
+
+    #memoWidget {
+        top: auto;
+        right: 10px;
+        bottom: 10px;
+        width: 175px;
+        padding: 9px;
+    }
+
+    #memoWidget p {
+        font-size: 11px;
+    }
+
+    main {
+        padding-bottom: 170px;
+    }
 }
 
-#saveMessage.is-error {
-    background-color: #f4e5bd;
-    color: #76502c;
-}
+@media (max-width: 390px) {
+    body {
+        padding: 14px;
+        padding-top: 52px;
+    }
 
-#saveButton:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    h1 {
+        padding: 12px 15px;
+        font-size: 25px;
+    }
+
+    h2 {
+        font-size: 21px;
+    }
+
+    section {
+        padding: 17px;
+    }
+
+    nav {
+        gap: 6px;
+    }
+
+    nav a {
+        padding: 7px 10px;
+    }
+
+    .form-buttons button {
+        flex: 1;
+    }
+
+    #memoWidget {
+        right: 8px;
+        bottom: 8px;
+        width: 155px;
+    }
 }
