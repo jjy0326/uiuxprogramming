@@ -239,3 +239,88 @@ loadStudyMemo();
 loadStudyChecks();
 loadTheme();
 renderNotes();
+
+
+/* 저장된 새 노트 목록 표시 */
+function renderDynamicNotes() {
+    const list = document.querySelector("#dynamicNoteList");
+    const message = document.querySelector("#dynamicNoteMessage");
+
+    // 메인 페이지가 아니면 실행하지 않음
+    if (!list) {
+        return;
+    }
+
+    list.replaceChildren();
+
+    let notes = [];
+
+    try {
+        const savedNotes = JSON.parse(
+            localStorage.getItem("dailyNotes") || "[]"
+        );
+
+        notes = Array.isArray(savedNotes) ? savedNotes : [];
+    } catch (error) {
+        if (message) {
+            message.textContent = "저장된 노트를 불러오지 못했습니다.";
+        }
+        return;
+    }
+
+    if (notes.length === 0) {
+        if (message) {
+            message.textContent = "아직 작성한 노트가 없습니다.";
+        }
+        return;
+    }
+
+    if (message) {
+        message.textContent = "";
+    }
+
+    notes.forEach((note) => {
+        const article = document.createElement("article");
+        article.className = "note-item";
+
+        const heading = document.createElement("h4");
+        heading.textContent = note.title || "제목 없는 노트";
+
+        const subject = document.createElement("p");
+        subject.textContent = note.subject
+            ? `수업 주제: ${note.subject}`
+            : "수업 주제 없음";
+
+        const date = document.createElement("small");
+        date.textContent = note.date
+            ? `수업 날짜: ${note.date}`
+            : "수업 날짜 미지정";
+
+        const sectionList = document.createElement("ol");
+        sectionList.className = "saved-note-sections";
+
+        const sections = Array.isArray(note.sections)
+            ? note.sections
+            : [];
+
+        sections.forEach((section, index) => {
+            const item = document.createElement("li");
+
+            const sectionTitle = document.createElement("strong");
+            sectionTitle.textContent =
+                `${index + 1}. ${section.title || "항목"}`;
+
+            const sectionContent = document.createElement("p");
+            sectionContent.textContent = section.content || "";
+
+            item.append(sectionTitle, sectionContent);
+            sectionList.appendChild(item);
+        });
+
+        article.append(heading, subject, date, sectionList);
+        list.appendChild(article);
+    });
+}
+
+// 페이지가 열리면 저장된 노트를 표시
+document.addEventListener("DOMContentLoaded", renderDynamicNotes);

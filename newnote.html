@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="하루노트에서 수업 내용을 항목별로 정리합니다.">
+    <title>새 노트 작성 | 하루노트</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="newnote.js" defer></script>
+</head>
+<body>
+    <header>
+        <button type="button" id="themeButton" class="theme-button">테마 변경</button>
+        <h1>새 노트 작성</h1>
+        <p>수업 내용을 항목별로 나누어 기록해 보세요.</p>
+    </header>
+
+    <main>
+        <section id="newNoteSection">
+            <h2>노트 기본 정보</h2>
+
+            <form id="newNoteForm">
+                <div class="form-group">
+                    <label for="noteTitle">노트 제목</label>
+                    <input
+                        type="text"
+                        id="noteTitle"
+                        maxlength="60"
+                        placeholder="예: 3주차 JavaScript 정리"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="noteSubject">수업 주제</label>
+                    <input
+                        type="text"
+                        id="noteSubject"
+                        maxlength="60"
+                        placeholder="예: 이벤트 처리"
+                    >
+                </div>
+
+                <div class="note-section-heading">
+                    <div>
+                        <h2>학습 내용</h2>
+                        <p>필요한 항목을 추가하고 제목과 내용을 작성하세요.</p>
+                    </div>
+                    <button type="button" id="addSectionButton">
+                        + 항목 추가
+                    </button>
+
+                     <button type="button" id="previewButton">
+            미리보기
+        </button>
+                </div>
+
+                <div id="noteSections">
+                    <article class="note-section-item">
+                        <div class="note-section-item-header">
+                            <h3 class="section-number">1. 항목</h3>
+                            <button
+                                type="button"
+                                class="delete-section-button"
+                            >
+                                항목 삭제
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="section-title-label">항목 제목</label>
+                            <input
+                                type="text"
+                                class="section-title"
+                                maxlength="80"
+                                placeholder="예: 중요 수업 내용"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+    <label class="section-content-label">간단한 내용</label>
+    <textarea
+        class="section-content"
+        rows="3"
+        maxlength="1000"
+        placeholder="핵심 내용만 간단하게 작성하세요."
+        required
+    ></textarea>
+</div>
+                    </article>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" id="newNoteSaveButton">
+                        노트 저장
+                    </button>
+                    <button type="reset" id="newNoteResetButton">
+                        작성 내용 초기화
+                    </button>
+                </div>
+
+                <p id="newNoteMessage" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <nav aria-label="페이지 이동">
+            <a href="index.html">메인 페이지로 돌아가기</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>하루노트 | 학습 내용을 기록하고 관리하는 노트</p>
+    </footer>
+</body>
+</html>
