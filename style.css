@@ -1,3 +1,4 @@
+
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
 
 * {
@@ -10,11 +11,11 @@ html {
 
 body {
     margin: 0;
-    padding: 30px;
+    padding: 20px;
     color: #4a4735;
     font-family: "Noto Sans KR", sans-serif;
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.5;
     background-color: #f3f0d0;
 }
 
@@ -35,58 +36,64 @@ p {
 }
 
 h1 {
-    margin: 0 0 25px;
-    padding: 15px 25px;
+    margin: 0 0 12px;
+    padding: 12px 16px;
     border: 1px solid #d5cf91;
     border-radius: 6px;
     background-color: #eeecb0;
     color: #353326;
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 25px;
 }
 
 h2 {
-    margin-top: 30px;
-    margin-bottom: 15px;
-    padding: 12px 18px;
+    margin: 0 0 10px;
+    padding: 9px 12px;
     border: 1px solid #d5cf91;
-    border-radius: 8px;
+    border-radius: 6px;
     background-color: #f6f4bd;
     color: #403d2d;
-    font-size: 24px;
-}
-
-#html h2 {
-    background-color: #eeecb0;
+    font-size: 18px;
 }
 
 h3 {
-    margin-top: 25px;
-    margin-bottom: 10px;
-    padding: 8px 12px;
+    margin: 10px 0 6px;
+    padding: 5px 8px;
     border-bottom: 1px solid #d5cf91;
-    background-color: transparent;
     color: #514d38;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 h4 {
+    margin: 0 0 6px;
     color: #403d2d;
 }
 
 p {
-    margin: 10px 0;
-    padding: 10px 15px;
-    border-left: 3px solid #d8d19a;
+    margin: 6px 0;
+    padding: 7px 10px;
+    border-left: 2px solid #d8d19a;
     background-color: #f6f4bd;
     color: #5b5742;
 }
 
+a {
+    color: #655b32;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #8b8040;
+    outline-offset: 2px;
+}
+
+/* 상단 영역 */
 .header-layout {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 24px;
+    gap: 14px;
 }
 
 .header-intro {
@@ -94,240 +101,279 @@ p {
     min-width: 0;
 }
 
+.service-subtitle {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* 메뉴 */
 nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-    max-width: 1100px;
-    margin: 15px auto;
+    gap: 8px;
+    margin: 12px auto;
 }
 
 nav a {
     flex: 1;
-    padding: 8px 12px;
+    min-width: 0;
+    padding: 7px 9px;
     border: 1px solid #d5cf91;
-    border-radius: 6px;
+    border-radius: 5px;
     background-color: #e9e6a8;
     color: #5b5742;
     text-align: center;
     text-decoration: none;
-    font-size: 15px;
-    transition: 0.3s;
+    font-size: 13px;
+    transition: background-color 0.2s;
 }
 
-nav a:hover,
-nav a:focus-visible {
+nav a:hover {
     background-color: #ded58b;
-    color: #403d2d;
-    transform: translateY(-2px);
 }
 
-.feature-grid,
-.features-list {
+/* 페이지 콘텐츠 */
+main {
+    min-width: 0;
+}
+
+main > section {
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #e2dc9c;
+    border-radius: 6px;
+    background-color: rgb(246 244 189 / 35%);
+}
+
+main > section > p {
+    font-size: 13px;
+}
+
+main > section > h2 {
+    margin-bottom: 8px;
+}
+
+/* 사용자, 목적, 핵심 행동 및 주요 기능 카드 */
+.feature-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.feature-card {
+    min-width: 0;
+    margin: 0;
+    padding: 9px;
+    border: 1px solid #d5cf91;
+    border-radius: 5px;
+    background-color: #e9e6a8;
+    color: #5b5742;
+}
+
+.feature-card h3 {
+    margin: 0 0 5px;
+    padding: 0 0 5px;
+    font-size: 13px;
+}
+
+.feature-card p {
+    margin: 0;
+    padding: 6px;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+/* 이용 방법 및 학습 순서 */
+.flow-list {
+    display: flex;
     align-items: stretch;
     gap: 12px;
     list-style: none;
     padding: 0;
-    margin: 15px 0 25px;
-}
-
-.feature-card,
-.features-card {
-    min-width: 0;
-    padding: 12px;
-    margin: 0;
-    border: 1px solid #d5cf91;
-    border-radius: 6px;
-    background-color: #e9e6a8;
-    color: #5b5742;
-    font-size: 15px;
-    transition: 0.3s;
-}
-
-.feature-card:hover,
-.features-card:hover {
-    background-color: #ded58b;
-    color: #403d2d;
-    transform: translateY(-2px);
-}
-
-.flow-list {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .flow-list li {
     position: relative;
     flex: 1;
-    padding: 12px 10px;
-    text-align: center;
+    min-width: 0;
+    padding: 8px;
     border: 1px solid #d0c87f;
-    border-radius: 8px;
+    border-radius: 5px;
     background-color: #f6f4bd;
     color: #514d38;
+    text-align: center;
+    font-size: 12px;
 }
 
 .flow-list li:not(:last-child)::after {
     content: "→";
     position: absolute;
-    right: -20px;
+    right: -11px;
+    top: 50%;
+    transform: translateY(-50%);
     color: #a59b55;
-    font-weight: bold;
+    font-weight: 700;
 }
 
-ol {
-    padding-left: 25px;
+ol:not(.flow-list) {
+    padding-left: 22px;
 }
 
-ol li {
-    padding: 3px 0;
+ol:not(.flow-list) li {
+    padding: 2px 0;
 }
 
 /* 학습 체크리스트 */
 #studyChecklist {
-    flex: 0 0 260px;
+    flex: 0 0 190px;
     min-width: 0;
-    padding: 18px;
+    padding: 10px;
     border: 1px solid #d5cf91;
-    border-radius: 8px;
+    border-radius: 6px;
     background-color: #eeecb0;
 }
 
 #studyChecklist h2 {
-    margin-top: 0;
-    font-size: 19px;
+    margin: 0 0 8px;
+    font-size: 14px;
+}
+
+.study-list {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0;
+}
+
+.study-list li {
+    margin: 4px 0;
+    padding: 5px 6px;
+    border-radius: 4px;
+    background-color: rgb(255 255 255 / 20%);
 }
 
 .study-item {
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin: 10px 0;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 .study-item input {
     flex: 0 0 auto;
     width: auto;
-    margin-top: 6px;
+    margin: 0;
+}
+
+#studyProgress,
+#studyCompleteMessage {
+    font-size: 12px;
+    margin: 5px 0;
 }
 
 #studyProgress {
     font-weight: 700;
 }
 
-#studyCompleteMessage,
-#memoMessage,
-#saveMessage {
-    min-height: 1.6em;
-    overflow-wrap: anywhere;
+#studyCompleteButton {
+    width: 100%;
+}
+
+/* 버튼 */
+button {
+    min-height: 30px;
+    padding: 5px 10px;
+    border: 1px solid #b9ad63;
+    border-radius: 5px;
+    background-color: #ded58b;
+    color: #403d2d;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    background-color: #d3c879;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* 테마 버튼 */
 .theme-button {
     position: fixed;
-    top: 12px;
-    left: 12px;
+    top: 10px;
+    left: 10px;
     z-index: 1000;
 }
 
-/* 간단 메모 위젯 */
+/* 간단 메모 */
 #memoWidget {
     position: fixed;
     top: 80px;
-    right: 16px;
+    right: 12px;
     z-index: 900;
-    width: 210px;
-    padding: 14px;
+    width: 175px;
+    padding: 10px;
     border: 1px solid #d5cf91;
-    border-radius: 8px;
+    border-radius: 6px;
     background-color: #eeecb0;
     color: #4a4735;
-    box-shadow: 0 4px 12px rgb(74 71 53 / 12%);
+    box-shadow: 0 3px 10px rgb(74 71 53 / 10%);
 }
 
 #memoWidget label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
+    font-size: 13px;
     font-weight: 700;
+}
+
+#memoWidget input {
+    width: 100%;
 }
 
 #memoWidget p {
     margin-bottom: 0;
-    font-size: 12px;
+    font-size: 11px;
 }
 
-/* 입력 영역 */
+/* 입력 요소 */
 input,
 textarea {
     width: 100%;
     min-width: 0;
-    padding: 8px 12px;
+    padding: 7px 9px;
     border: 1px solid #cfc78a;
     border-radius: 5px;
     background-color: #f6f4bd;
     color: #403d2d;
     font-family: "Noto Sans KR", sans-serif;
-    font-size: 15px;
-}
-
-textarea {
-    resize: vertical;
-}
-
-input:focus-visible,
-textarea:focus-visible,
-button:focus-visible,
-a:focus-visible {
-    outline: 3px solid #8b8040;
-    outline-offset: 2px;
+    font-size: 13px;
 }
 
 input[type="checkbox"] {
     accent-color: #82783d;
 }
 
-button {
-    min-height: 40px;
-    padding: 8px 18px;
-    border: 1px solid #b9ad63;
-    border-radius: 5px;
-    background-color: #ded58b;
-    color: #403d2d;
-    font-family: "Noto Sans KR", sans-serif;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
+textarea {
+    resize: vertical;
 }
 
-button:hover:not(:disabled) {
-    background-color: #d3c879;
-    transform: translateY(-2px);
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-}
-
-#studyCompleteButton {
-    width: 100%;
-}
-
-/* 노트 저장 폼 */
+/* 노트 작성 폼 */
 #noteForm {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
-    padding: 15px;
+    gap: 8px;
+    padding: 12px;
     border: 1px solid #d5cf91;
     border-radius: 6px;
     background-color: #eeecb0;
@@ -337,16 +383,19 @@ button:disabled {
     font-weight: 500;
 }
 
-#noteForm input,
-#noteForm textarea {
-    width: 100%;
-}
-
 .form-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 8px;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+#saveMessage,
+#memoMessage,
+#studyCompleteMessage,
+#noteListMessage {
+    min-height: 1.5em;
+    overflow-wrap: anywhere;
 }
 
 #saveMessage.is-saved {
@@ -361,57 +410,74 @@ button:disabled {
     font-weight: 700;
 }
 
-#saveButton:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
 /* 저장된 노트 */
 .note-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px;
     padding: 0;
+    margin: 8px 0;
     list-style: none;
 }
 
 .note-item {
     min-width: 0;
-    padding: 14px;
+    padding: 10px;
     border: 1px solid #d5cf91;
-    border-radius: 6px;
+    border-radius: 5px;
     background-color: #e9e6a8;
     color: #5b5742;
 }
 
 .note-item h4 {
-    margin: 0 0 8px;
-    color: #403d2d;
+    font-size: 14px;
 }
 
 .note-item p {
     white-space: pre-wrap;
+    font-size: 12px;
 }
 
 .note-item small {
     display: block;
-    margin-top: 8px;
-    opacity: 0.8;
+    margin-top: 6px;
+    font-size: 11px;
 }
 
 .note-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
+    gap: 6px;
+    margin-top: 8px;
 }
 
-/* 탭 메뉴 */
+/* 새 노트 작성 링크 */
+.note-create-link {
+    margin-top: 6px;
+    padding: 8px 10px;
+    border: 1px solid #d8d08a;
+    border-radius: 5px;
+    background-color: rgb(255 255 255 / 25%);
+    text-align: center;
+}
+
+.note-create-link a {
+    display: block;
+    color: #655b32;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.note-create-link a:hover {
+    text-decoration: underline;
+}
+
+/* HTML, CSS, JavaScript 탭 */
 .tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 6px;
+    margin-bottom: 8px;
 }
 
 .tab {
@@ -419,26 +485,28 @@ button:disabled {
 }
 
 .tab.is-active {
-    border-bottom: 4px solid #82783d;
+    border-bottom: 3px solid #82783d;
     background-color: #ded58b;
     font-weight: 700;
 }
 
 .panel {
-    padding: 20px;
+    padding: 12px;
     border: 1px solid #d5cf91;
-    border-radius: 8px;
+    border-radius: 6px;
     background-color: #f6f4bd;
     color: #4a4735;
 }
 
-.panel[hidden] {
-    display: none;
+.panel[hidden],
+[hidden] {
+    display: none !important;
 }
 
+/* 하단 */
 footer {
-    margin-top: 30px;
-    padding: 10px;
+    margin-top: 18px;
+    padding: 8px;
     border: 1px solid #d5cf91;
     border-radius: 6px;
     background-color: #eeecb0;
@@ -479,20 +547,20 @@ body.dark h4 {
     color: #f4f4f8;
 }
 
+body.dark main > section {
+    border-color: #50515f;
+    background-color: rgb(45 46 56 / 45%);
+}
+
 body.dark nav a,
 body.dark .feature-card,
-body.dark .features-card,
 body.dark .note-item,
-body.dark .flow-list li {
+body.dark .flow-list li,
+body.dark .study-list li,
+body.dark .note-create-link {
     border-color: #50515f;
     background-color: #363744;
     color: #f4f4f8;
-}
-
-body.dark nav a:hover,
-body.dark .feature-card:hover,
-body.dark .features-card:hover {
-    background-color: #48495a;
 }
 
 body.dark button,
@@ -514,6 +582,10 @@ body.dark textarea {
     color: #f4f4f8;
 }
 
+body.dark .note-create-link a {
+    color: #f4f4f8;
+}
+
 body.dark #saveMessage.is-saved {
     background-color: #293b2c;
     color: #a9e5a5;
@@ -524,16 +596,11 @@ body.dark #saveMessage.is-error {
     color: #ffb4a6;
 }
 
-/* 태블릿 및 모바일 */
+/* 태블릿 */
 @media (max-width: 768px) {
     body {
-        padding: 20px;
-        font-size: 16px;
-    }
-
-    header {
-        padding-top: 32px;
-        padding-bottom: 24px;
+        padding: 16px;
+        font-size: 14px;
     }
 
     .header-layout {
@@ -546,14 +613,13 @@ body.dark #saveMessage.is-error {
     }
 
     .feature-grid,
-    .features-list,
     .note-list {
         grid-template-columns: 1fr;
     }
 
     nav {
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
 
     nav a {
@@ -563,7 +629,7 @@ body.dark #saveMessage.is-error {
 
     .flow-list {
         flex-direction: column;
-        align-items: stretch;
+        gap: 14px;
     }
 
     .flow-list li {
@@ -572,63 +638,46 @@ body.dark #saveMessage.is-error {
 
     .flow-list li:not(:last-child)::after {
         content: "↓";
-        right: 50%;
-        bottom: -25px;
         top: auto;
-    }
-
-    .tabs {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .tab {
-        width: 100%;
-        text-align: left;
+        right: 50%;
+        bottom: -15px;
+        transform: translateX(50%);
     }
 
     #memoWidget {
         top: auto;
-        right: 10px;
-        bottom: 10px;
-        width: 175px;
-        padding: 9px;
+        right: 8px;
+        bottom: 8px;
+        width: 155px;
+        padding: 8px;
     }
 
     #memoWidget p {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     main {
-        padding-bottom: 170px;
+        padding-bottom: 145px;
     }
 }
 
 @media (max-width: 390px) {
     body {
-        padding: 14px;
-        padding-top: 52px;
+        padding: 12px;
+        padding-top: 48px;
     }
 
     h1 {
-        padding: 12px 15px;
-        font-size: 25px;
+        padding: 10px 12px;
+        font-size: 22px;
     }
 
     h2 {
-        font-size: 21px;
+        font-size: 16px;
     }
 
-    section {
-        padding: 17px;
-    }
-
-    nav {
-        gap: 6px;
-    }
-
-    nav a {
-        padding: 7px 10px;
+    main > section {
+        padding: 9px;
     }
 
     .form-buttons button {
@@ -636,8 +685,37 @@ body.dark #saveMessage.is-error {
     }
 
     #memoWidget {
-        right: 8px;
-        bottom: 8px;
-        width: 155px;
+        width: 145px;
     }
+}
+
+/* 노트 작성 및 저장 목록 */
+#noteListSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#noteListSection .note-create-link {
+    margin: 0;
+    padding: 8px 10px;
+    border: 1px solid #d5cf91;
+    border-radius: 5px;
+    background-color: #e9e6a8;
+    text-align: center;
+}
+
+#noteListSection .note-create-link a {
+    display: block;
+    color: #5b5742;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+#noteListSection .note-create-link a:hover {
+    text-decoration: underline;
+}
+
+#noteListSection h2 {
+    margin: 0;
 }
