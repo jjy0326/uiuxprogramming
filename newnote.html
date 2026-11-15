@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,7 +7,6 @@
     <meta name="description" content="하루노트에서 수업 내용을 항목별로 정리합니다.">
     <title>새 노트 작성 | 하루노트</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style-additions.css">
     <script src="script.js" defer></script>
     <script src="newnote.js" defer></script>
 </head>
@@ -21,114 +21,88 @@
         <section id="newNoteSection">
             <h2>노트 기본 정보</h2>
 
-            <form id="newNoteForm" novalidate>
+            <form id="newNoteForm">
                 <div class="form-group">
-                    <label for="noteTitle">노트 제목 <span aria-hidden="true">*</span></label>
+                    <label for="noteTitle">노트 제목</label>
                     <input
                         type="text"
                         id="noteTitle"
-                        minlength="2"
                         maxlength="60"
                         placeholder="예: 3주차 JavaScript 정리"
-                        aria-describedby="noteTitleHelp noteTitleCount noteTitleError"
                         required
                     >
-                    <small id="noteTitleHelp" class="field-help">2~60자로 입력해 주세요.</small>
-                    <small id="noteTitleCount" class="field-count">0/60자</small>
-                    <p id="noteTitleError" class="field-feedback" aria-live="polite"></p>
                 </div>
 
                 <div class="form-group">
-                    <label for="noteSubject">수업 주제 <span aria-hidden="true">*</span></label>
-                    <select
-                        id="noteSubject"
-                        required
-                        aria-describedby="noteSubjectHelp noteSubjectError"
-                    >
-                        <option value="">수업 주제를 선택하세요.</option>
-                        <option value="Python">Python</option>
-                        <option value="HTML / CSS">HTML / CSS</option>
-                        <option value="JavaScript">JavaScript</option>
-                        <option value="Java">Java</option>
-                        <option value="기타">기타</option>
-                    </select>
-                    <small id="noteSubjectHelp" class="field-help">작성할 학습 내용과 가장 가까운 주제를 선택해 주세요.</small>
-                    <p id="noteSubjectError" class="field-feedback" aria-live="polite"></p>
-                </div>
-
-                <div id="customSubjectGroup" class="form-group conditional-field" hidden>
-                    <label for="customSubject">직접 입력할 주제 <span aria-hidden="true">*</span></label>
+                    <label for="noteSubject">수업 주제</label>
                     <input
                         type="text"
-                        id="customSubject"
-                        minlength="2"
+                        id="noteSubject"
                         maxlength="60"
-                        placeholder="수업 주제를 직접 입력하세요."
-                        aria-describedby="customSubjectHelp customSubjectError"
-                        disabled
+                        placeholder="예: 이벤트 처리"
                     >
-                    <small id="customSubjectHelp" class="field-help">2~60자로 입력해 주세요.</small>
-                    <p id="customSubjectError" class="field-feedback" aria-live="polite"></p>
                 </div>
 
                 <div class="note-section-heading">
                     <div>
                         <h2>학습 내용</h2>
-                        <p>항목 제목은 2자 이상, 내용은 10자 이상 작성해 주세요.</p>
+                        <p>필요한 항목을 추가하고 제목과 내용을 작성하세요.</p>
                     </div>
-                    <div class="note-section-actions">
-                        <button type="button" id="addSectionButton">+ 항목 추가</button>
-                        <button type="button" id="previewButton">미리보기</button>
-                    </div>
+                    <button type="button" id="addSectionButton">
+                        + 항목 추가
+                    </button>
+
+                     <button type="button" id="previewButton">
+            미리보기
+        </button>
                 </div>
 
                 <div id="noteSections">
                     <article class="note-section-item">
                         <div class="note-section-item-header">
                             <h3 class="section-number">1. 항목</h3>
-                            <button type="button" class="delete-section-button">항목 삭제</button>
+                            <button
+                                type="button"
+                                class="delete-section-button"
+                            >
+                                항목 삭제
+                            </button>
                         </div>
 
                         <div class="form-group">
-                            <label class="section-title-label" for="sectionTitle1">항목 제목 <span aria-hidden="true">*</span></label>
+                            <label class="section-title-label">항목 제목</label>
                             <input
                                 type="text"
-                                id="sectionTitle1"
                                 class="section-title"
-                                minlength="2"
                                 maxlength="80"
                                 placeholder="예: 중요 수업 내용"
                                 required
                             >
-                            <small class="field-help">2~80자로 입력해 주세요.</small>
-                            <small class="field-count section-title-count">0/80자</small>
-                            <p class="field-feedback section-title-error" aria-live="polite"></p>
                         </div>
 
                         <div class="form-group">
-                            <label class="section-content-label" for="sectionContent1">간단한 내용 <span aria-hidden="true">*</span></label>
-                            <textarea
-                                id="sectionContent1"
-                                class="section-content"
-                                rows="3"
-                                minlength="10"
-                                maxlength="1000"
-                                placeholder="핵심 내용만 간단하게 작성하세요."
-                                required
-                            ></textarea>
-                            <small class="field-help">10~1,000자로 입력해 주세요.</small>
-                            <small class="field-count section-content-count">0/1,000자</small>
-                            <p class="field-feedback section-content-error" aria-live="polite"></p>
-                        </div>
+    <label class="section-content-label">간단한 내용</label>
+    <textarea
+        class="section-content"
+        rows="3"
+        maxlength="1000"
+        placeholder="핵심 내용만 간단하게 작성하세요."
+        required
+    ></textarea>
+</div>
                     </article>
                 </div>
 
                 <div class="form-buttons">
-                    <button type="submit" id="newNoteSaveButton">노트 저장</button>
-                    <button type="reset" id="newNoteResetButton">작성 내용 초기화</button>
+                    <button type="submit" id="newNoteSaveButton">
+                        노트 저장
+                    </button>
+                    <button type="reset" id="newNoteResetButton">
+                        작성 내용 초기화
+                    </button>
                 </div>
 
-                <p id="newNoteMessage" class="form-status" aria-live="polite" role="status"></p>
+                <p id="newNoteMessage" aria-live="polite"></p>
             </form>
         </section>
 
