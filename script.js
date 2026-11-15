@@ -1,19 +1,17 @@
+"use strict";
 
+/* 페이지마다 존재하는 요소가 다르므로 요소가 있을 때만 기능을 연결합니다. */
 const themeButton = document.querySelector("#themeButton");
-
 const memoInput = document.querySelector("#nickname");
 const memoMessage = document.querySelector("#memoMessage");
-
 const studyChecks = document.querySelectorAll(".study-check");
 const studyProgress = document.querySelector("#studyProgress");
 const studyCompleteButton = document.querySelector("#studyCompleteButton");
 const studyCompleteMessage = document.querySelector("#studyCompleteMessage");
 
-const noteList = document.querySelector("#noteList");
+const DAILY_NOTES_KEY = "dailyNotes";
+const LEGACY_NOTES_KEY = "savedNotes";
 
-const NOTES_KEY = "savedNotes";
-
-/* 저장된 데이터 불러오기 */
 function readStorage(key, defaultValue = null) {
     try {
         const value = localStorage.getItem(key);
@@ -24,7 +22,6 @@ function readStorage(key, defaultValue = null) {
     }
 }
 
-/* 데이터 저장하기 */
 function writeStorage(key, value) {
     try {
         localStorage.setItem(key, value);
@@ -35,18 +32,42 @@ function writeStorage(key, value) {
     }
 }
 
-/* 안내 문구 표시 */
 function showMessage(element, message, type = "") {
-    element.textContent = message;
-    element.classList.remove("is-saved", "is-error");
+    if (!element) return;
 
-    if (type) {
-        element.classList.add(type);
+    element.textContent = message;
+    element.classList.remove("is-saved", "is-error", "is-progress");
+
+    if (type) element.classList.add(type);
+}
+
+/* 공통 테마 기능 */
+function loadTheme() {
+    if (!themeButton) return;
+
+    const savedTheme = readStorage("pageTheme", "light");
+    const isDark = savedTheme === "dark";
+
+    document.body.classList.toggle("dark", isDark);
+    themeButton.textContent = isDark ? "라이트 테마" : "다크 테마";
+}
+
+function handleThemeClick() {
+    const isDark = document.body.classList.toggle("dark");
+
+    if (themeButton) {
+        themeButton.textContent = isDark ? "라이트 테마" : "다크 테마";
+    }
+
+    if (!writeStorage("pageTheme", isDark ? "dark" : "light")) {
+        showMessage(memoMessage, "테마는 변경했지만 설정 저장에 실패했습니다.", "is-error");
     }
 }
 
-/* 간단 메모 저장 */
+/* 메인 페이지 간단 메모 */
 function handleStudyMemoInput() {
+    if (!memoInput) return;
+
     const memo = memoInput.value.trim();
 
     if (writeStorage("studyMemo", memo)) {
@@ -60,8 +81,9 @@ function handleStudyMemoInput() {
     }
 }
 
-/* 간단 메모 불러오기 */
 function loadStudyMemo() {
+    if (!memoInput) return;
+
     const savedMemo = readStorage("studyMemo", "");
     memoInput.value = savedMemo || "";
 
@@ -70,39 +92,31 @@ function loadStudyMemo() {
     }
 }
 
-/* 학습 진행률 표시 */
+/* 메인 페이지 학습 체크리스트 */
 function updateStudyProgress() {
-    const checkedCount = document.querySelectorAll(
-        ".study-check:checked"
-    ).length;
+    if (!studyProgress) return;
 
-    studyProgress.textContent =
-        `학습 진행률: ${checkedCount}/${studyChecks.length}`;
+    const checkedCount = Array.from(studyChecks).filter((item) => item.checked).length;
+    studyProgress.textContent = `학습 진행률: ${checkedCount}/${studyChecks.length}`;
 }
 
-/* 체크리스트 저장 */
 function saveStudyChecks() {
     const checkedValues = Array.from(studyChecks)
         .filter((checkbox) => checkbox.checked)
         .map((checkbox) => checkbox.value);
 
     if (!writeStorage("studyChecks", JSON.stringify(checkedValues))) {
-        showMessage(
-            studyCompleteMessage,
-            "학습 상태 저장에 실패했습니다.",
-            "is-error"
-        );
+        showMessage(studyCompleteMessage, "학습 상태 저장에 실패했습니다.", "is-error");
     }
 
     updateStudyProgress();
 }
 
-/* 체크리스트 불러오기 */
 function loadStudyChecks() {
+    if (studyChecks.length === 0) return;
+
     try {
-        const checkedValues = JSON.parse(
-            readStorage("studyChecks", "[]")
-        );
+        const checkedValues = JSON.parse(readStorage("studyChecks", "[]"));
 
         if (!Array.isArray(checkedValues)) {
             throw new Error("체크리스트 데이터가 올바르지 않습니다.");
@@ -118,18 +132,11 @@ function loadStudyChecks() {
     updateStudyProgress();
 }
 
-/* 학습 완료 확인 */
 function handleStudyComplete() {
-    const checkedCount = Array.from(studyChecks)
-        .filter((checkbox) => checkbox.checked)
-        .length;
+    const checkedCount = Array.from(studyChecks).filter((item) => item.checked).length;
 
     if (checkedCount === studyChecks.length) {
-        showMessage(
-            studyCompleteMessage,
-            "모든 학습 항목을 확인했습니다.",
-            "is-saved"
-        );
+        showMessage(studyCompleteMessage, "모든 학습 항목을 확인했습니다.", "is-saved");
     } else {
         showMessage(
             studyCompleteMessage,
@@ -138,148 +145,39 @@ function handleStudyComplete() {
     }
 }
 
-/* 저장된 노트 표시 */
-function renderNotes() {
-    let notes = [];
-
-    try {
-        const savedNotes = JSON.parse(
-            readStorage(NOTES_KEY, "[]")
-        );
-
-        if (Array.isArray(savedNotes)) {
-            notes = savedNotes.filter((note) => {
-                return (
-                    note &&
-                    typeof note.title === "string" &&
-                    typeof note.content === "string"
-                );
-            });
-        }
-    } catch (error) {
-        console.error("저장된 노트를 불러오지 못했습니다.", error);
-    }
-
-    noteList.replaceChildren();
-
-    if (notes.length === 0) {
-        const emptyItem = document.createElement("li");
-        emptyItem.textContent = "저장된 노트가 없습니다.";
-        noteList.appendChild(emptyItem);
-        return;
-    }
-
-    notes.forEach((note) => {
-        const item = document.createElement("li");
-        item.classList.add("note-item");
-
-        const title = document.createElement("h3");
-        title.textContent = note.title;
-
-        const content = document.createElement("p");
-        content.classList.add("note-preview");
-        content.textContent = note.content;
-
-        const date = document.createElement("small");
-        date.textContent = note.updatedAt
-            ? `최근 수정: ${note.updatedAt}`
-            : "";
-
-        item.append(title, content, date);
-        noteList.appendChild(item);
-    });
-}
-
-/* 테마 불러오기 */
-function loadTheme() {
-    const savedTheme = readStorage("pageTheme", "light");
-    const isDark = savedTheme === "dark";
-
-    document.body.classList.toggle("dark", isDark);
-    themeButton.textContent = isDark ? "라이트 테마" : "다크 테마";
-}
-
-/* 테마 변경 */
-function handleThemeClick() {
-    const isDark = document.body.classList.toggle("dark");
-
-    themeButton.textContent = isDark ? "라이트 테마" : "다크 테마";
-
-    if (!writeStorage("pageTheme", isDark ? "dark" : "light")) {
-        showMessage(
-            memoMessage,
-            "테마는 변경했지만 설정 저장에 실패했습니다.",
-            "is-error"
-        );
-    }
-}
-
-/* 이벤트 연결 */
-themeButton.addEventListener("click", handleThemeClick);
-memoInput.addEventListener("input", handleStudyMemoInput);
-
-studyChecks.forEach((checkbox) => {
-    checkbox.addEventListener("change", saveStudyChecks);
-});
-
-studyCompleteButton.addEventListener("click", handleStudyComplete);
-
-/* 다른 페이지에서 돌아오면 최신 노트 표시 */
-window.addEventListener("pageshow", renderNotes);
-
-/* 다른 탭에서 노트가 변경된 경우에도 갱신 */
-window.addEventListener("storage", (event) => {
-    if (event.key === NOTES_KEY) {
-        renderNotes();
-    }
-});
-
-/* 초기 화면 설정 */
-loadStudyMemo();
-loadStudyChecks();
-loadTheme();
-renderNotes();
-
-
-/* 저장된 새 노트 목록 표시 */
+/* 새 노트와 2주차 노트를 메인 페이지에 함께 표시 */
 function renderDynamicNotes() {
     const list = document.querySelector("#dynamicNoteList");
     const message = document.querySelector("#dynamicNoteMessage");
 
-    // 메인 페이지가 아니면 실행하지 않음
-    if (!list) {
-        return;
-    }
+    if (!list) return;
 
     list.replaceChildren();
 
-    let notes = [];
+    let dailyNotes = [];
+    let legacyNotes = [];
 
     try {
-        const savedNotes = JSON.parse(
-            localStorage.getItem("dailyNotes") || "[]"
-        );
+        const dailyData = JSON.parse(readStorage(DAILY_NOTES_KEY, "[]"));
+        const legacyData = JSON.parse(readStorage(LEGACY_NOTES_KEY, "[]"));
 
-        notes = Array.isArray(savedNotes) ? savedNotes : [];
+        dailyNotes = Array.isArray(dailyData) ? dailyData : [];
+        legacyNotes = Array.isArray(legacyData) ? legacyData : [];
     } catch (error) {
-        if (message) {
-            message.textContent = "저장된 노트를 불러오지 못했습니다.";
-        }
+        showMessage(message, "저장된 노트를 불러오지 못했습니다.", "is-error");
         return;
     }
 
-    if (notes.length === 0) {
-        if (message) {
-            message.textContent = "아직 작성한 노트가 없습니다.";
-        }
+    const hasNotes = dailyNotes.length > 0 || legacyNotes.length > 0;
+
+    if (!hasNotes) {
+        showMessage(message, "아직 작성한 노트가 없습니다.");
         return;
     }
 
-    if (message) {
-        message.textContent = "";
-    }
+    showMessage(message, "");
 
-    notes.forEach((note) => {
+    dailyNotes.forEach((note) => {
         const article = document.createElement("article");
         article.className = "note-item";
 
@@ -287,32 +185,21 @@ function renderDynamicNotes() {
         heading.textContent = note.title || "제목 없는 노트";
 
         const subject = document.createElement("p");
-        subject.textContent = note.subject
-            ? `수업 주제: ${note.subject}`
-            : "수업 주제 없음";
+        subject.textContent = note.subject ? `수업 주제: ${note.subject}` : "수업 주제 없음";
 
         const date = document.createElement("small");
-        date.textContent = note.date
-            ? `수업 날짜: ${note.date}`
-            : "수업 날짜 미지정";
+        date.textContent = note.date ? `저장일: ${note.date}` : "";
 
         const sectionList = document.createElement("ol");
         sectionList.className = "saved-note-sections";
 
-        const sections = Array.isArray(note.sections)
-            ? note.sections
-            : [];
-
-        sections.forEach((section, index) => {
+        (Array.isArray(note.sections) ? note.sections : []).forEach((section, index) => {
             const item = document.createElement("li");
-
             const sectionTitle = document.createElement("strong");
-            sectionTitle.textContent =
-                `${index + 1}. ${section.title || "항목"}`;
-
             const sectionContent = document.createElement("p");
-            sectionContent.textContent = section.content || "";
 
+            sectionTitle.textContent = `${index + 1}. ${section.title || "항목"}`;
+            sectionContent.textContent = section.content || "";
             item.append(sectionTitle, sectionContent);
             sectionList.appendChild(item);
         });
@@ -320,7 +207,51 @@ function renderDynamicNotes() {
         article.append(heading, subject, date, sectionList);
         list.appendChild(article);
     });
+
+    legacyNotes.forEach((note) => {
+        const article = document.createElement("article");
+        article.className = "note-item";
+
+        const heading = document.createElement("h4");
+        heading.textContent = note.title || "제목 없는 노트";
+
+        const content = document.createElement("p");
+        content.className = "note-preview";
+        content.textContent = note.content || "";
+
+        const date = document.createElement("small");
+        date.textContent = note.updatedAt ? `최근 수정: ${note.updatedAt}` : "";
+
+        article.append(heading, content, date);
+        list.appendChild(article);
+    });
 }
 
-// 페이지가 열리면 저장된 노트를 표시
-document.addEventListener("DOMContentLoaded", renderDynamicNotes);
+/* 이벤트 연결: 현재 페이지에 있는 요소만 실행 */
+if (themeButton) {
+    themeButton.addEventListener("click", handleThemeClick);
+}
+
+if (memoInput) {
+    memoInput.addEventListener("input", handleStudyMemoInput);
+}
+
+studyChecks.forEach((checkbox) => {
+    checkbox.addEventListener("change", saveStudyChecks);
+});
+
+if (studyCompleteButton) {
+    studyCompleteButton.addEventListener("click", handleStudyComplete);
+}
+
+window.addEventListener("pageshow", renderDynamicNotes);
+window.addEventListener("storage", (event) => {
+    if ([DAILY_NOTES_KEY, LEGACY_NOTES_KEY].includes(event.key)) {
+        renderDynamicNotes();
+    }
+});
+
+loadTheme();
+loadStudyMemo();
+loadStudyChecks();
+renderDynamicNotes();

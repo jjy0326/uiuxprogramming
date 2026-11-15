@@ -875,3 +875,167 @@ body.dark .note-section-item-header h3 {
         flex: 1;
     }
 }
+
+/* 새 노트 입력 폼 과제 추가 스타일
+   newnote.html에서 기존 style.css 다음에 연결합니다. */
+
+#newNoteForm .form-group {
+    margin-bottom: 18px;
+}
+
+#newNoteForm label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+#newNoteForm input,
+#newNoteForm select,
+#newNoteForm textarea {
+    width: 100%;
+    max-width: 100%;
+}
+
+#newNoteForm .field-help,
+#newNoteForm .field-count {
+    display: inline-block;
+    margin-top: 5px;
+    color: #6c684f;
+    font-size: 0.85rem;
+}
+
+#newNoteForm .field-count {
+    float: right;
+    font-variant-numeric: tabular-nums;
+}
+
+#newNoteForm .field-feedback {
+    min-height: 1.2em;
+    margin: 4px 0 0;
+    color: #a33b2e;
+    font-size: 0.88rem;
+}
+
+#newNoteForm .field-feedback:empty {
+    display: none;
+}
+
+#newNoteForm .field-feedback.is-error,
+#newNoteForm .field-feedback:not(:empty) {
+    color: #a33b2e;
+}
+
+#newNoteForm [aria-invalid="true"] {
+    border: 2px solid #b84a3a;
+    outline-color: #b84a3a;
+}
+
+#newNoteForm .conditional-field[hidden] {
+    display: none;
+}
+
+#newNoteForm .note-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 24px 0 16px;
+}
+
+#newNoteForm .note-section-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#newNoteForm .note-section-item {
+    padding: 16px;
+    margin: 14px 0;
+    border: 1px solid #d5cf91;
+    border-radius: 10px;
+    background: rgba(233, 230, 168, 0.35);
+}
+
+#newNoteForm .note-section-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+#newNoteForm .note-section-item-header h3 {
+    margin: 0;
+}
+
+#newNoteForm button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+#newNoteForm .form-status {
+    min-height: 1.5em;
+    margin-top: 14px;
+    font-weight: 700;
+}
+
+#newNoteForm .form-status.is-error {
+    color: #a33b2e;
+}
+
+#newNoteForm .form-status.is-saved {
+    color: #356b3d;
+}
+
+#newNoteForm .form-status.is-progress {
+    color: #80651b;
+}
+
+#newNoteForm .form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#newNoteForm .form-buttons button {
+    min-width: 120px;
+}
+
+body.dark #newNoteForm .field-help,
+body.dark #newNoteForm .field-count {
+    color: #d2cfb8;
+}
+
+body.dark #newNoteForm .note-section-item {
+    background: rgba(80, 76, 48, 0.35);
+    border-color: #77704b;
+}
+
+body.dark #newNoteForm .field-feedback,
+body.dark #newNoteForm .form-status.is-error {
+    color: #ffaaa0;
+}
+
+body.dark #newNoteForm .form-status.is-saved {
+    color: #a7d9a9;
+}
+
+@media (max-width: 768px) {
+    #newNoteForm .note-section-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #newNoteForm .note-section-actions,
+    #newNoteForm .form-buttons {
+        width: 100%;
+    }
+
+    #newNoteForm .note-section-actions button,
+    #newNoteForm .form-buttons button {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+}
